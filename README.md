@@ -20,11 +20,11 @@ into query features through gated modulation for fine-grained crack segmentation
 ```
 MPDFormer/
 ├── configs/
-│   └── default.yaml                     # paper configuration (MiT-b4, CrackSeg9K)
+│   └── default.yaml                     # configuration file
 ├── train.py                             # Lightning training entry point
 ├── inference.py                         # few-shot inference on query images
 ├── dataset.py                           # MPDFormerDataModule (episode-based sampling)
-├── lightning_module.py                  # LitMPDFormer: optimizers, warmup+cosine LR, EMA, metrics
+├── lightning_module.py                  # LitMPDFormer: optimizers, warmup+cosine LR, metrics
 ├── models/
 │   ├── mit_encoder.py                   # MiT (MixVisionTransformer) encoder wrapper
 │   ├── prototype_pooling.py             # masked average pooling & cosine similarity maps
@@ -32,7 +32,7 @@ MPDFormer/
 │   ├── ssp_refinement.py                # SSP module
 │   ├── acf_decoder.py                   # PGDecoder (ACFPrototypeDecoder)
 │   └── prototype_acf_segformer.py       # full MPDFormer model
-├── losses/                              # BCE + soft Dice + Focal (learnable weights), boundary loss
+├── losses/                              # BCE + soft Dice + Focal (learnable weights)
 ├── datasets/                            # episode dataset and image/mask loading
 ├── utils/                               # metrics (F1/mIoU/Acc), transforms, visualizer, ...
 ├── SegFormer/                           # vanilla SegFormer baseline (b0–b5) + weight downloader
@@ -54,7 +54,7 @@ pip install -r requirements.txt
 
 ### 2. Datasets
 
-**Training / validation:** [CrackSeg9K](https://github.com/zhao-ju/CrackSeg9K) — arrange the
+**Training / validation:** [CrackSeg9K](https://github.com/Dhananjay42/crackseg9k) — arrange the
 data as:
 
 ```
@@ -83,7 +83,7 @@ or pass an existing file with `--backbone-weights-path /path/to/mit_b4.pth`.
 
 ## Training
 
-The paper configuration is `configs/default.yaml`: MiT-b4, 512×512, 1-shot, 200 epochs,
+The default Configuration is `configs/default.yaml`: MiT-b4, 512×512, 1-shot, 200 epochs,
 batch size 8, AdamW (lr 1e-4, encoder lr ×0.5), 5-epoch linear warmup + cosine annealing,
 5000 episodes/epoch, strong augmentation, AMP, early stopping (patience 25).
 
