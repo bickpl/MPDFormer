@@ -1,0 +1,26 @@
+# MPDFormer requirements
+# Tested with Python 3.8 / 3.11, CUDA 11.8 / 12.1.
+#
+# Install a PyTorch build that matches your CUDA version first (see https://pytorch.org), e.g.:
+#   pip install torch==2.1.0 torchvision==0.16.0 --index-url https://download.pytorch.org/whl/cu121
+
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Training framework (uses the PL 2.x Trainer API, e.g. precision="16-mixed")
+pytorch-lightning>=2.0.0
+
+# Augmentations (utils/transforms.py uses the albumentations 1.x API,
+# e.g. ShiftScaleRotate / GaussNoise(var_limit) / ImageCompression(quality_lower),
+# which was renamed or removed in 2.0)
+albumentations>=1.3.0,<2.0.0
+opencv-python-headless>=4.6.0
+
+# torch 2.x wheels are built against the numpy 1.x ABI
+numpy>=1.23.0,<2.0.0
+Pillow>=9.2.0
+PyYAML>=6.0
+tqdm>=4.60.0
+
+# Default logger of PyTorch Lightning (TensorBoard)
+tensorboard>=2.10.0

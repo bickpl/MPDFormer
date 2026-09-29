@@ -1,0 +1,98 @@
+
+backbone: "b4"
+pretrained_backbone: true
+backbone_weights_path: ""
+
+
+decoder_dim: 256
+decoder_dropout: 0.2
+temperature: 10.0
+
+# OSDFM prototype separation margin
+sep_margin: 0.1
+
+# SSP Self‑Supporting Prototype
+use_ssp: true
+ssp_mode: "soft"
+ssp_top_ratio: 0.15
+ssp_blend: 0.5
+alpha_min: 0.05
+alpha_max: 0.95
+
+# PGDecoder + aux/boundary loss
+use_aux: true
+use_boundary: true
+
+# ---- training hyperparams (paper: AdamW, total 200 epoch, warmup 5 epoch cosine) ----
+epochs: 200
+batch_size: 8
+lr: 1.0e-4
+encoder_lr_mult: 0.5   # encoder lr = lr *0.5 → 5e‑5
+weight_decay: 0.01
+optimizer: "adamw"
+scheduler: "cosine"
+warmup_epochs: 5
+
+# loss weights (paper uses learnable log‑space weights inside MPDFormerLoss)
+lambda_bce: 1.0
+lambda_dice: 1.0
+lambda_focal: 0.25
+
+# ---- few‑shot episode setting ----
+k_shot: 1
+episodes_per_epoch: 5000
+
+# ---- dataset config CrackSeg9K ----
+data_root: "path2data"
+img_size: 512
+train_split: "train"
+val_split: "val"
+
+mask_mode: "nonzero"
+mask_threshold: 127
+foreground_value: 255
+support_mask_mode: "nonzero"
+support_mask_threshold: 127
+support_foreground_value: 255
+
+allow_empty_support: false
+min_support_fg_ratio: 0.001
+max_support_fg_ratio: 1.0
+min_query_fg_ratio: 0.001
+max_query_fg_ratio: 1.0
+positive_query_prob: 0.7
+cross_domain_support_prob: 0.0
+
+# Paper augmentation: flip, rotate, scale, brightness‑contrast, blur, noise
+aug_mode: "strong"
+aug_scale_limit: 0.25
+aug_rotate_limit: 10
+crop_attempts: 50
+
+max_val_samples: 1800
+
+# ---- runtime ----
+seed: 42
+amp: true
+freeze_encoder: false
+freeze_encoder_stages: 0
+freeze_batchnorm: false
+use_ema: false
+
+num_workers: 8
+prefetch_factor: 2
+gradient_clipping: 1.0
+
+# ---- early stopping ----
+early_stopping: true
+early_stopping_patience: 25
+early_stopping_min_delta: 0.0005
+
+check_val_every_n_epoch: 1
+limit_train_batches: 1.0
+limit_val_batches: 1.0
+num_sanity_val_steps: 0
+log_every_n_steps: 20
+save_dir: "path dir"
+
+pred_threshold: 0.5

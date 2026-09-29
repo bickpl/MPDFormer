@@ -1,0 +1,25 @@
+# IDE / editor
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Experiment outputs
+runs/
+lightning_logs/
+val_samples/
+checkpoints/
+
+# Model weights
+*.pth
+*.ckpt
+*.bin
+
+# Datasets and paper drafts (not part of the release)
+dataset/
+data/
+paper/
+*.pdf
